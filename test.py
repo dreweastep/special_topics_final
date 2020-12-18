@@ -14,7 +14,7 @@ class TestHello(unittest.TestCase):
 
     def test_bad_route(self):
         rv = self.app.get('/badRoute')
-        self.assertEqual(rv.status, '200 OK')
+        self.assertEqual(rv.status, '404 NOT FOUND')
 
     def test_get_one_temp(self):
         rv = self.app.get('/get_one_temp_api')
