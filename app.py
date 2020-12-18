@@ -6,7 +6,7 @@ from flask_pymongo import PyMongo
 app = Flask(__name__)
 
 #mongo
-app.config["MONGO_URI"] = "mongodb://192.168.56:223:27017/temperature"
+app.config["MONGO_URI"] = "mongodb://192.168.56.223:27017/temperature"
 mongo = PyMongo(app)
 
 @app.route('/') 
