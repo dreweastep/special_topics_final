@@ -9,16 +9,16 @@
   </head>
   <body>
 
-{% block title %}<h3>Recent Bed Room Temps</h3>{% endblock %}
+{% block title %}<h3>Recent Bed Room Temps</h3>{% endblock %} <!-- using block tag will allow template engine to override contents with child templates  -->
 
 {% block content %}
 
-    {% if temps %}    
+    {% if temps %} <!-- Jinja2 if statement  -->
 
        <table role="grid">
-        {% for temp in temps %}
+        {% for temp in temps %}<!-- Jinja2 for loop -->
             <tr>
-            <td>{{ temp['room'] }}</td><td>{{ temp['temperature'] }}</td>
+            <td>{{ temp['room'] }}</td><td>{{ temp['temperature'] }}</td> <!-- Using temperature readings from mongo, template html -->
           </tr>
         {% endfor %}
        </table> 
