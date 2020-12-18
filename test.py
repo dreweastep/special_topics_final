@@ -12,6 +12,14 @@ class TestHello(unittest.TestCase):
         rv = self.app.get('/')
         self.assertEqual(rv.status, '200 OK')
 
+    def test_bad_route(self):
+        rv = self.app.get('/badRoute')
+        self.assertEqual(rv.status, '200 OK')
+
+    def test_get_one_temp(self):
+        rv = self.app.get('/get_one_temp_api')
+        self.assertEqual(rv.status, '200 OK')
+
     #add two more tests please
 
 if __name__ == '__main__':
