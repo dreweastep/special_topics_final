@@ -1,0 +1,78 @@
+---
+- name: Fix ansible installation
+  gather_facts: false
+  hosts: all
+  connection: local
+  become: yes
+
+  vars:
+    reinstall_ansible_from_ppa: no
+
+    update_ansible_config_for_vagrant: yes
+
+    # ansible_additonal_role_path: '/ansible/roles'
+    ansible_additonal_role_path: no
+
+    # ansible_nb_parallel_targets: 20
+    ansible_nb_parallel_targets: no
+
+    install_ansible_modules: no
+
+
+  tasks:
+    - name: Update ansible roles path
+      when: ansible_additonal_role_path
+      lineinfile:
+        path: "/etc/ansible/ansible.cfg"
+        line: "roles_path    = /etc/ansible/roles:{{ ansible_additonal_role_path }}"
+        regexp: '^#?roles_path *='
+
+    - name: Disable checking host key changes
+      when: update_ansible_config_for_vagrant
+      lineinfile:
+        path: "/etc/ansible/ansible.cfg"
+        regexp: '.*host_key_checking = .*'
+        line: 'host_key_checking = False'
+
+    - name: Update ssh config for vagrant
+      when: update_ansible_config_for_vagrant
+      lineinfile:
+        path: "/etc/ansible/ansible.cfg"
+        regexp: '.*ssh_args = .*'
+        line: "ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes"
+
+    - name: Tweek number of target hosts provisioned in parallel
+      when: ansible_nb_parallel_targets
+      lineinfile:
+        path: "/etc/ansible/ansible.cfg"
+        regexp: '.*forks = .*'
+        line: 'forks = {{ ansible_nb_parallel_targets }}'
+
+    - name: install pip
+      apt:
+        name: python3-pip
+
+    - name: tell Ansible python interpreter is python3
+      set_fact:
+        ansible_python_interpreter: "/usr/bin/python3"
+
+    - name: install standard python modules
+      pip:
+        name:
+          - requests
+          - configparser
+
+    - name: install Ansible module dependencies (pip)
+      when: install_ansible_modules
+      pip:
+        name:
+          - pywinrm>=0.3.0
+          - docker-py
+          - python-dnf
+          - pyrax
+
+    - name: install Ansible module dependencies (system)
+      when: install_ansible_modules
+      apt:
+        name:
+          - rsync

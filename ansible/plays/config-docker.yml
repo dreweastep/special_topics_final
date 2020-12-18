@@ -1,0 +1,35 @@
+- name: Install and configure Docker on ubuntu 18.04
+  gather_facts: false
+  hosts: all
+  become: yes
+  
+  tasks:
+  - name: APT Update
+    command: apt update
+
+  - name: Install prerequisites for Docker repository
+    apt:
+      name: ['apt-transport-https', 'ca-certificates', 'curl', 'gnupg2', 'software-properties-common']
+      update_cache: yes
+
+  - name: Add Docker GPG key
+    apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+
+  - name: Add Docker APT repository
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+
+  - name: Install Docker CE
+    apt:
+      name: ['docker-ce', 'docker-ce-cli', 'containerd.io']
+      update_cache: yes
+
+  - name: Install prerequisites for docker-compose
+    apt:
+      name: ['python3-pip', 'python3-setuptools', 'virtualenv']
+
+  - name: Adding vagrant user to docker group
+    user:
+      name: vagrant
+      groups: docker
+      append: yes

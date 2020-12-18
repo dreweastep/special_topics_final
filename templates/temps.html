@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Temps</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+  </style>
+  </head>
+  <body>
+
+{% block title %}<h3>Recent Bed Room Temps</h3>{% endblock %}
+
+{% block content %}
+
+    {% if temps %}    
+
+       <table role="grid">
+        {% for temp in temps %}
+            <tr>
+            <td>{{ temp['room'] }}</td><td>{{ temp['temperature'] }}</td>
+          </tr>
+        {% endfor %}
+       </table> 
+
+    {% endif %}
+{% endblock %}
+</body>  
+</html>
