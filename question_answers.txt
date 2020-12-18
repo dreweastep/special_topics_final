@@ -1,0 +1,22 @@
+1. When deploying this package to the target server, what configuration would need to be done on that target server?  
+
+ -- Environment variables for the database url and credentials, something to unzip and run the code once it gets deployed as a tarball
+
+2. What would we need to do? 
+
+ -- Set these before doing builds
+
+3. What's example of a system we could use to ensure that the target system is configured properly (hint: Ansible).  On the target system we want to just unzip and flask run. 
+
+ -- Use ansible?
+
+4. What about the database IP addresses embedded in the code.  How could we handle that if the database the code needs to talk to is a different db (which it most likely will be).
+
+ -- Set configuration variables on the target system or use a configuration managemen system
+
+5. When deploying this code as a container, what is one configuration that we wouldn't need to do on the target server.
+
+ -- Configuration to run the code once deployed
+
+
+
