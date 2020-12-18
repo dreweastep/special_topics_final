@@ -3,11 +3,11 @@ from flask import Flask
 from flask import render_template
 from flask_pymongo import PyMongo
 
-app = Flask(__name__) #Instantiate flask
+app = Flask(__name__)
 
 #mongo
 app.config["MONGO_URI"] = "mongodb://192.168.56:223:27017/temperature"
-mongo = PyMongo(app) #Instantiate pymongo connector
+mongo = PyMongo(app)
 
 @app.route('/') 
 @app.route('/index/')
