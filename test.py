@@ -18,7 +18,7 @@ class TestHello(unittest.TestCase):
 
     def test_get_one_temp(self):
         rv = self.app.get('/get_one_temp_api')
-        pring(rv)
+        print(rv)
         self.assertEqual(rv.status, '200 OK')
 
     #add two more tests please
